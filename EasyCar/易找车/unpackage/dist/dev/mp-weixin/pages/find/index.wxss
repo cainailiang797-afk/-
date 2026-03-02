@@ -1,0 +1,515 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 全局样式 */
+.app-container {
+	background-color: #f5f5f5;
+	min-height: 100vh;
+}
+/* 顶部导航栏 */
+.nav-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 80rpx;
+	background-color: white;
+	padding: 0 20rpx;
+	border-bottom: 1rpx solid #e0e0e0;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 100;
+}
+.nav-left {
+	flex: 1;
+	display: flex;
+	align-items: center;
+}
+.back-button {
+	font-size: 36rpx;
+	color: #333;
+}
+.nav-center {
+	flex: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.nav-title {
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #333;
+}
+.nav-right {
+	flex: 1;
+}
+/* 内容区域 */
+.content {
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100vh - 80rpx);
+}
+/* 加载中状态 */
+.loading-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 300rpx;
+}
+.loading-text {
+	font-size: 28rpx;
+	color: #999;
+}
+/* 空状态 */
+.empty-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 300rpx;
+}
+.empty-text {
+	font-size: 28rpx;
+	color: #999;
+}
+/* 列表容器 */
+.list-container {
+	padding: 20rpx 20rpx 0 20rpx;
+}
+/* 停车记录项 */
+.parking-item {
+	display: flex;
+	background-color: white;
+	border-radius: 12rpx;
+	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+	padding: 20rpx;
+	margin-bottom: 20rpx;
+}
+/* 车辆照片 */
+.item-image {
+	width: 250rpx;
+	height: 250rpx;
+	border-radius: 8rpx;
+	overflow: hidden;
+	margin-right: 20rpx;
+	position: relative;
+	cursor: pointer;
+	flex-shrink: 0;
+}
+.item-map {
+	width: 100%;
+	height: 180rpx;
+	border-radius: 0;
+	overflow: hidden;
+	position: relative;
+}
+.item-image image {
+	width: 100%;
+	height: 100%;
+}
+/* 图片预览覆盖层 */
+.image-overlay {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 40rpx;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.overlay-icon {
+	font-size: 24rpx;
+	color: white;
+}
+/* 点击效果 */
+.item-image:active {
+	-webkit-transform: scale(0.95);
+	        transform: scale(0.95);
+	transition: -webkit-transform 0.2s ease;
+	transition: transform 0.2s ease;
+	transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+}
+/* 记录内容 */
+.item-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+/* 记录头部 */
+.item-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12rpx;
+}
+.item-location {
+	font-size: 28rpx;
+	font-weight: 500;
+	color: #333;
+	flex: 1;
+	margin-right: 12rpx;
+}
+.item-date {
+	font-size: 24rpx;
+	color: #999;
+}
+/* 记录底部 */
+.item-footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.item-time {
+	font-size: 24rpx;
+	color: #999;
+}
+.item-status {
+	font-size: 20rpx;
+	padding: 4rpx 12rpx;
+	border-radius: 12rpx;
+	background-color: #f0f8ff;
+	color: #0f88eb;
+}
+.item-status.old {
+		background-color: #f5f5f5;
+		color: #999;
+}
+/* 停车记录容器 */
+.parking-item-container {
+		margin-bottom: 20rpx;
+}
+/* 地图容器 */
+.map-container {
+		margin-top: 10rpx;
+		background-color: white;
+		border-radius: 12rpx;
+		box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+		overflow: hidden;
+}
+.map-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 60rpx;
+		padding: 0 20rpx;
+		border-bottom: 1rpx solid #e0e0e0;
+}
+.map-title {
+		font-size: 28rpx;
+		font-weight: 500;
+		color: #333;
+}
+.map-close {
+		font-size: 36rpx;
+		color: #999;
+		cursor: pointer;
+}
+.map-content {
+		padding: 0;
+}
+/* 防止图片点击事件冒泡 */
+.item-image {
+		pointer-events: auto;
+}
+/* 分页控件 */
+.pagination {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 30rpx 0;
+		gap: 40rpx;
+}
+.page-btn {
+		padding: 16rpx 40rpx;
+		background-color: #0f88eb;
+		border-radius: 8rpx;
+}
+.page-btn.disabled {
+		background-color: #e0e0e0;
+}
+.page-btn-text {
+		font-size: 28rpx;
+		color: white;
+}
+.page-btn.disabled .page-btn-text {
+		color: #999;
+}
+.page-info {
+		display: flex;
+		align-items: baseline;
+}
+.page-num {
+		font-size: 32rpx;
+		font-weight: bold;
+		color: #333;
+}
+.page-total {
+		font-size: 24rpx;
+		color: #999;
+}
+

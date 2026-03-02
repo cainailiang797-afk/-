@@ -1,0 +1,452 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 全局样式 */
+.app-container {
+	background-color: #f5f5f5;
+	min-height: 100vh;
+}
+/* 顶部导航栏 */
+.nav-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 80rpx;
+	background-color: white;
+	padding: 0 20rpx;
+	border-bottom: 1rpx solid #e0e0e0;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 100;
+}
+.nav-left {
+	flex: 1;
+	display: flex;
+	align-items: center;
+}
+.back-button {
+	font-size: 36rpx;
+	color: #333;
+}
+.nav-center {
+	flex: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.nav-title {
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #333;
+}
+.nav-right {
+	flex: 1;
+}
+/* 内容区域 */
+.content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30rpx;
+}
+/* 卡片式设计 */
+.card {
+	background-color: white;
+	border-radius: 12rpx;
+	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+	padding: 30rpx;
+	width: 100%;
+	max-width: 600rpx;
+}
+/* 表单项 */
+.form-item {
+	margin-bottom: 40rpx;
+}
+.form-label {
+	display: block;
+	font-size: 28rpx;
+	font-weight: 500;
+	color: #333;
+	margin-bottom: 12rpx;
+}
+.input-container {
+	border: 1rpx solid #e0e0e0;
+	border-radius: 8rpx;
+	padding: 0 20rpx;
+}
+.form-input {
+	height: 80rpx;
+	font-size: 28rpx;
+	color: #333;
+}
+/* 定位相关样式 */
+.location-container {
+	border: 1rpx solid #e0e0e0;
+	border-radius: 8rpx;
+	overflow: hidden;
+}
+.location-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 80rpx;
+	background-color: #fafafa;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+.location-button:active {
+	background-color: #f0f0f0;
+}
+.location-icon {
+	font-size: 32rpx;
+	margin-right: 12rpx;
+}
+.location-text {
+	font-size: 28rpx;
+	color: #666;
+}
+.location-info {
+	display: flex;
+	align-items: center;
+	padding: 0 20rpx;
+	height: 80rpx;
+	background-color: #f8f8f8;
+}
+.location-detail {
+	flex: 1;
+	font-size: 24rpx;
+	color: #333;
+	margin-right: 12rpx;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.location-refresh {
+	font-size: 24rpx;
+	color: #0f88eb;
+	cursor: pointer;
+	padding: 8rpx;
+}
+.location-refresh:active {
+	-webkit-transform: rotate(180deg);
+	        transform: rotate(180deg);
+	transition: -webkit-transform 0.5s ease;
+	transition: transform 0.5s ease;
+	transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+}
+.location-map {
+	margin-top: 15rpx;
+	border-radius: 8rpx;
+	overflow: hidden;
+}
+/* 上传区域 */
+.upload-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 20rpx;
+}
+.upload-button {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border: 2rpx dashed #e0e0e0;
+	border-radius: 8rpx;
+	width: 150rpx;
+	height: 150rpx;
+	background-color: #fafafa;
+	cursor: pointer;
+	flex-shrink: 0;
+}
+.upload-icon {
+	font-size: 48rpx;
+	color: #999;
+	margin-bottom: 8rpx;
+}
+.upload-text {
+	font-size: 20rpx;
+	color: #999;
+	text-align: center;
+}
+.image-preview {
+	position: relative;
+	width: 150rpx;
+	height: 150rpx;
+	border-radius: 8rpx;
+	overflow: hidden;
+	flex-shrink: 0;
+}
+.preview-image {
+	width: 100%;
+	height: 100%;
+}
+.delete-image {
+	position: absolute;
+	top: 6rpx;
+	right: 6rpx;
+	width: 32rpx;
+	height: 32rpx;
+	border-radius: 50%;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	font-size: 24rpx;
+	text-align: center;
+	line-height: 32rpx;
+	cursor: pointer;
+}
+/* 提交按钮 */
+.submit-container {
+	margin-top: 60rpx;
+}
+.submit-button {
+	height: 80rpx;
+	background-color: #0f88eb;
+	border-radius: 40rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+.submit-button:active {
+	background-color: #0c73cc;
+	-webkit-transform: scale(0.98);
+	        transform: scale(0.98);
+}
+.submit-text {
+	color: white;
+	font-size: 32rpx;
+	font-weight: bold;
+}
+
