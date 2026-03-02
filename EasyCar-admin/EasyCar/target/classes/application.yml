@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://119.29.235.139:3306/easycar_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: easycar_db
+    password: YhN8x7azwY6MPPZP
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # Redis配置（连接本地Redis）
+  redis:
+    host: 119.29.235.139
+    port: 6379
+    password: YhN8x7azwY6MPPZP
+    database: 0
+  rabbitmq:
+    host: 119.29.235.139  # RabbitMQ地址
+    port: 5672       # 端口
+    username: guest  # 默认用户名
+    password: guest  # 默认密码
+# JWT配置（简化版）
+jwt:
+  secret: your_secure_secret_key_32bytes_1234567890abcdefg
+  access-expire: 3600 # Access Token 1小时过期（秒）
+  refresh-expire: 604800 # Refresh Token 7天过期（秒）

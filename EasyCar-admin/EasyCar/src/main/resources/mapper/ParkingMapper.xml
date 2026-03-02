@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应 UserMapper 接口的全类名 -->
+<mapper namespace="com.example.EasyCar.mapper.ParkingMapper">
+
+    <resultMap id="ParkingMap" type="com.example.EasyCar.domain.Parking">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="parking_location" property="parkingLocation" />
+        <result column="location" property="location" />
+        <result column="photo" property="photo" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+<!--    &lt;!&ndash; 定义结果映射（可选，字段名一致时可省略，复杂映射时推荐使用） &ndash;&gt;-->
+<!--    <select id="selectClassroomList" parameterType="String" resultMap="ClassroomMap">-->
+<!--        select id, room_name from classroom-->
+<!--        <where>-->
+<!--            <if test="roomName != null and roomName != ''"> and room_name = #{roomName}</if>-->
+<!--        </where>-->
+
+<!--    </select>-->
+
+
+<!--    <update id="editClassroom" parameterType="com.example.demo.domain.Classroom">-->
+<!--        update classroom-->
+<!--        <trim prefix="SET" suffixOverrides=",">-->
+<!--            <if test="roomName != null">room_name = #{roomName},</if>-->
+<!--        </trim>-->
+<!--        where id = #{id}-->
+<!--    </update>-->
+
+<!--    <delete id="deleteClassroom" parameterType="com.example.demo.domain.Classroom">-->
+<!--        delete from classroom where id = #{id}-->
+<!--    </delete>-->
+
+    <insert id="addParking" parameterType="com.example.EasyCar.domain.Parking">
+        insert into parking
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="parkingLocation != null and parkingLocation != ''">parking_location,</if>
+            <if test="location != null and location != ''">location,</if>
+            <if test="photo != null and photo != ''">photo,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="parkingLocation != null and parkingLocation != ''">#{parkingLocation},</if>
+            <if test="location != null and location != ''">#{location},</if>
+            <if test="photo != null and photo != ''">#{photo},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+    
+    <select id="findByPhoto" parameterType="String" resultMap="ParkingMap">
+        select id, user_id, location, photo, create_time
+        from parking
+        where photo = #{photo}
+        order by create_time desc
+        limit 1
+    </select>
+    
+    <select id="findAll" resultMap="ParkingMap">
+        select id, user_id, location, photo, create_time
+        from parking
+        order by create_time desc
+    </select>
+    
+    <select id="findByUserId" parameterType="Long" resultMap="ParkingMap">
+        select id, user_id, location, photo, create_time
+        from parking
+        where user_id = #{userId}
+        order by create_time desc
+    </select>
+
+<!--    <select id="getById" parameterType="com.example.demo.domain.Classroom" resultMap="ClassroomMap">-->
+<!--        select id, room_name from classroom-->
+<!--        where id = #{id}-->
+<!--    </select>-->
+</mapper>

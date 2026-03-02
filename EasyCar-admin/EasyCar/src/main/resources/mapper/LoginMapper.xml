@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应 UserMapper 接口的全类名 -->
+<mapper namespace="com.example.EasyCar.mapper.LoginMapper">
+
+    <resultMap id="UserMap" type="com.example.EasyCar.domain.User">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+    
+    <select id="selectUserByusername" parameterType="String" resultType="com.example.EasyCar.domain.User">
+        select id, username, password, create_time from user
+        where username = #{username}
+    </select>
+    
+    <select id="selectUserById" parameterType="Long" resultType="com.example.EasyCar.domain.User">
+        select id, username, password, create_time from user
+        where id = #{id}
+    </select>
+
+    <insert id="InsertRegister" parameterType="com.example.EasyCar.domain.User">
+        insert into user (username, password, create_time) VALUES(#{username}, #{password}, NOW())
+    </insert>
+</mapper>
