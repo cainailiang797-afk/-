@@ -4,6 +4,55 @@
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
 
+// 自定义模态框（替代 prompt/confirm，在 iframe 预览 / 沙箱里也能用）
+function customPrompt(message, defaultValue, callback) {
+  const old = document.getElementById('custom-modal');
+  if (old) old.remove();
+  const m = document.createElement('div');
+  m.id = 'custom-modal';
+  m.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:9999;';
+  const esc = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  m.innerHTML = '<div style="background:#1e293b;padding:24px;border-radius:8px;min-width:360px;border:1px solid #334155;">' +
+    '<p style="margin:0 0 12px;color:#e2e8f0;font-size:14px;">' + esc(message) + '</p>' +
+    '<input id="modal-input" type="text" value="' + esc(defaultValue) + '" ' +
+      'style="width:100%;padding:8px 10px;background:#0f172a;color:#e2e8f0;border:1px solid #334155;border-radius:4px;font-size:14px;box-sizing:border-box;">' +
+    '<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;">' +
+      '<button id="modal-cancel" style="padding:8px 16px;background:#475569;color:white;border:none;border-radius:4px;cursor:pointer;font-size:14px;">取消</button>' +
+      '<button id="modal-ok" style="padding:8px 16px;background:#06b6d4;color:white;border:none;border-radius:4px;cursor:pointer;font-size:14px;">确定</button>' +
+    '</div>' +
+  '</div>';
+  document.body.appendChild(m);
+  const inp = document.getElementById('modal-input');
+  inp.focus(); inp.select();
+  const close = (v) => { m.remove(); callback(v); };
+  document.getElementById('modal-ok').onclick = () => close(inp.value);
+  document.getElementById('modal-cancel').onclick = () => close(null);
+  inp.onkeydown = (e) => {
+    if (e.key === 'Enter') close(inp.value);
+    if (e.key === 'Escape') close(null);
+  };
+}
+
+function customConfirm(message, callback) {
+  const old = document.getElementById('custom-modal');
+  if (old) old.remove();
+  const m = document.createElement('div');
+  m.id = 'custom-modal';
+  m.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:9999;';
+  const esc = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  m.innerHTML = '<div style="background:#1e293b;padding:24px;border-radius:8px;min-width:360px;border:1px solid #334155;">' +
+    '<p style="margin:0 0 16px;color:#e2e8f0;font-size:14px;">' + esc(message) + '</p>' +
+    '<div style="display:flex;gap:8px;justify-content:flex-end;">' +
+      '<button id="modal-cancel" style="padding:8px 16px;background:#475569;color:white;border:none;border-radius:4px;cursor:pointer;font-size:14px;">取消</button>' +
+      '<button id="modal-ok" style="padding:8px 16px;background:#dc2626;color:white;border:none;border-radius:4px;cursor:pointer;font-size:14px;">确定</button>' +
+    '</div>' +
+  '</div>';
+  document.body.appendChild(m);
+  const close = (v) => { m.remove(); callback(v); };
+  document.getElementById('modal-ok').onclick = () => close(true);
+  document.getElementById('modal-cancel').onclick = () => close(false);
+}
+
 // ===== 顶部 tab 切换 =====
 $$('.tab').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -73,34 +122,35 @@ function escapeHtml(s) {
 }
 
 // ===== 新建空白项目 =====
-$('#btn-new-project').addEventListener('click', async () => {
-  const name = prompt('项目名（英文/数字/下划线）', 'my-topic');
-  if (!name) return;
-  const safe = name.replace(/[^a-zA-Z0-9_\-]/g, '_');
-  const blank = {
-    topic: name,
-    cuts: Array.from({ length: 9 }, (_, i) => ({
-      id: `cut-${i + 1}`,
-      type: 'hero_title',
-      in_seconds: i * 4,
-      out_seconds: (i + 1) * 4,
-      text: `第 ${i + 1} 张`,
-      subtitle: '副标题',
-      backgroundColor: '#0F172A',
-    })),
-    overlays: [],
-    subtitles: Array.from({ length: 9 }, (_, i) => ({
-      start: i * 4, end: (i + 1) * 4, text: `这是第 ${i + 1} 段字幕`,
-    })),
-    captions: [],
-    audio: {},
-  };
-  await fetch(`/api/projects/${encodeURIComponent(safe)}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: safe, topic: name, data: blank, vertical: true }),
+$('#btn-new-project').addEventListener('click', () => {
+  customPrompt('项目名（英文/数字/下划线）', 'my-topic', async (name) => {
+    if (!name) return;
+    const safe = name.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    const blank = {
+      topic: name,
+      cuts: Array.from({ length: 9 }, (_, i) => ({
+        id: `cut-${i + 1}`,
+        type: 'hero_title',
+        in_seconds: i * 4,
+        out_seconds: (i + 1) * 4,
+        text: `第 ${i + 1} 张`,
+        subtitle: '副标题',
+        backgroundColor: '#0F172A',
+      })),
+      overlays: [],
+      subtitles: Array.from({ length: 9 }, (_, i) => ({
+        start: i * 4, end: (i + 1) * 4, text: `这是第 ${i + 1} 段字幕`,
+      })),
+      captions: [],
+      audio: {},
+    };
+    await fetch(`/api/projects/${encodeURIComponent(safe)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: safe, topic: name, data: blank, vertical: true }),
+    });
+    openEditor(safe);
   });
-  openEditor(safe);
 });
 
 // ===== 编辑器 =====
@@ -186,11 +236,13 @@ $('#btn-generate').addEventListener('click', async () => {
   }
 });
 
-$('#btn-delete').addEventListener('click', async () => {
+$('#btn-delete').addEventListener('click', () => {
   if (!currentProject) return;
-  if (!confirm(`删除项目 "${currentProject.name}" 的所有视频和 JSON？`)) return;
-  await fetch(`/api/projects/${encodeURIComponent(currentProject.name)}`, { method: 'DELETE' });
-  $('#btn-back').click();
+  customConfirm(`删除项目 "${currentProject.name}" 的所有视频和 JSON？`, async (ok) => {
+    if (!ok) return;
+    await fetch(`/api/projects/${encodeURIComponent(currentProject.name)}`, { method: 'DELETE' });
+    $('#btn-back').click();
+  });
 });
 
 function pollJobStatus(jobId) {
