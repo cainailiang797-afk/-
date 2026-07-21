@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenMontage Studio</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>🎬 OpenMontage Studio</h1>
+    <nav>
+      <button class="tab active" data-tab="gallery">📁 项目库</button>
+      <button class="tab" data-tab="generate">✨ 主题生成</button>
+      <button class="tab" data-tab="settings">⚙️ 设置</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============== 项目库 ============== -->
+    <section id="tab-gallery" class="tab-pane active">
+      <div class="toolbar">
+        <h2>项目库</h2>
+        <button id="btn-new-project" class="primary">+ 新建空白项目</button>
+      </div>
+      <div id="project-grid" class="grid">
+        <div class="loading">加载中…</div>
+      </div>
+    </section>
+
+    <!-- ============== 编辑器 ============== -->
+    <section id="tab-editor" class="tab-pane">
+      <div class="editor-layout">
+        <aside class="editor-sidebar">
+          <h3 id="editor-title">项目</h3>
+          <div class="editor-meta">
+            <label>主题 <input id="editor-topic" type="text" placeholder="为什么人会做梦"></label>
+            <label>方向
+              <select id="editor-vertical">
+                <option value="1">9:16 竖屏</option>
+                <option value="0">16:9 横屏</option>
+              </select>
+            </label>
+          </div>
+          <div class="editor-actions">
+            <button id="btn-save" class="primary">💾 保存</button>
+            <button id="btn-generate" class="primary">🎬 生成视频</button>
+            <button id="btn-back">← 返回</button>
+            <button id="btn-delete" class="danger">🗑 删除</button>
+          </div>
+          <div id="job-status" class="job-status"></div>
+        </aside>
+        <div class="editor-main">
+          <div class="editor-tabs">
+            <button class="etab active" data-etab="json">JSON</button>
+            <button class="etab" data-etab="preview">预览</button>
+            <button class="etab" data-etab="log">日志</button>
+          </div>
+          <div class="editor-pane active" id="epane-json">
+            <textarea id="json-editor" spellcheck="false"></textarea>
+          </div>
+          <div class="editor-pane" id="epane-preview">
+            <div id="preview-empty" class="empty">还没生成视频</div>
+            <video id="preview-video" controls style="display:none; max-width: 360px; max-height: 640px;"></video>
+          </div>
+          <div class="editor-pane" id="epane-log">
+            <pre id="job-log"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== 主题生成 ============== -->
+    <section id="tab-generate" class="tab-pane">
+      <h2>主题 → 视频</h2>
+      <p class="hint">填个主题，AI 自动出 JSON 选题，调流水线生成视频。</p>
+      <div class="form-row">
+        <label>主题 <input id="llm-topic" type="text" placeholder="比如：黑洞是什么" autofocus></label>
+        <label>项目名（可选）<input id="llm-name" type="text" placeholder="不填就用主题名"></label>
+      </div>
+      <button id="btn-llm-generate" class="primary">✨ 生成 JSON</button>
+      <div id="llm-result"></div>
+    </section>
+
+    <!-- ============== 设置 ============== -->
+    <section id="tab-settings" class="tab-pane">
+      <h2>LLM 设置</h2>
+      <p class="hint">API 走 OpenAI 兼容协议，OpenAI / DeepSeek / 智谱 / 月之暗面 都行。</p>
+      <div class="form-row">
+        <label>Base URL <input id="set-base-url" type="text" placeholder="https://api.openai.com/v1"></label>
+        <label>Model <input id="set-model" type="text" placeholder="gpt-4o-mini"></label>
+        <label>API Key <input id="set-api-key" type="password" placeholder="sk-..."></label>
+      </div>
+      <button id="btn-save-settings" class="primary">保存</button>
+      <div id="llm-status-display"></div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+/* ===== 全局 ===== */
+:root {
+  --bg: #0f172a;
+  --bg-2: #1e293b;
+  --bg-3: #334155;
+  --fg: #e2e8f0;
+  --fg-2: #94a3b8;
+  --accent: #22d3ee;
+  --accent-2: #a78bfa;
+  --danger: #ef4444;
+  --ok: #34d399;
+  --warn: #f59e0b;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ===== 顶部 ===== */
+header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 24px;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--bg-3);
+  position: sticky; top: 0; z-index: 10;
+}
+header h1 { margin: 0; font-size: 18px; }
+header nav { display: flex; gap: 8px; }
+.tab {
+  background: transparent;
+  color: var(--fg-2);
+  border: 1px solid var(--bg-3);
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.tab:hover { color: var(--fg); }
+.tab.active {
+  color: var(--fg);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0f172a;
+  font-weight: 600;
+}
+
+main { padding: 24px; max-width: 1400px; margin: 0 auto; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ===== 通用控件 ===== */
+button {
+  background: var(--bg-2);
+  color: var(--fg);
+  border: 1px solid var(--bg-3);
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+}
+button:hover { border-color: var(--accent); }
+button.primary {
+  background: var(--accent);
+  color: #0f172a;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+button.primary:hover { background: #06b6d4; }
+button.danger {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+input, select, textarea {
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--bg-3);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 13px;
+}
+input:focus, select:focus, textarea:focus { outline: 1px solid var(--accent); }
+label { display: block; margin: 8px 0; color: var(--fg-2); }
+label input, label select { display: block; margin-top: 4px; width: 100%; max-width: 480px; }
+.hint { color: var(--fg-2); font-size: 12px; }
+.toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 16px;
+}
+.toolbar h2 { margin: 0; }
+
+/* ===== 项目库 grid ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.project-card {
+  background: var(--bg-2);
+  border: 1px solid var(--bg-3);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.1s, border-color 0.1s;
+}
+.project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.project-card .poster {
+  width: 100%;
+  aspect-ratio: 9/16;
+  background: #000;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--fg-2);
+  overflow: hidden;
+}
+.project-card .poster img, .project-card .poster video {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.project-card .info { padding: 10px 12px; }
+.project-card .name { font-weight: 600; margin-bottom: 4px; }
+.project-card .meta {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--fg-2);
+}
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.status-idle { background: var(--bg-3); color: var(--fg-2); }
+.status-generating { background: var(--warn); color: #0f172a; }
+.status-done { background: var(--ok); color: #0f172a; }
+.status-error { background: var(--danger); color: #fff; }
+.loading, .empty { padding: 32px; text-align: center; color: var(--fg-2); }
+
+/* ===== 编辑器 ===== */
+.editor-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 16px;
+  height: calc(100vh - 130px);
+}
+.editor-sidebar {
+  background: var(--bg-2);
+  border: 1px solid var(--bg-3);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex; flex-direction: column;
+  overflow: auto;
+}
+.editor-sidebar h3 { margin: 0 0 12px; }
+.editor-meta label { display: block; margin: 10px 0; }
+.editor-meta input, .editor-meta select { width: 100%; max-width: none; }
+.editor-actions {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-top: 16px;
+}
+.editor-actions button { width: 100%; }
+.job-status {
+  margin-top: 16px;
+  padding: 8px;
+  background: var(--bg);
+  border-radius: 4px;
+  font-size: 12px;
+  min-height: 32px;
+}
+
+.editor-main {
+  display: flex; flex-direction: column;
+  background: var(--bg-2);
+  border: 1px solid var(--bg-3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.editor-tabs {
+  display: flex; gap: 4px;
+  padding: 8px;
+  border-bottom: 1px solid var(--bg-3);
+}
+.etab {
+  background: transparent;
+  border: none;
+  padding: 6px 12px;
+  color: var(--fg-2);
+}
+.etab.active { color: var(--fg); border-bottom: 2px solid var(--accent); }
+.editor-pane {
+  display: none;
+  flex: 1;
+  overflow: auto;
+}
+.editor-pane.active { display: flex; flex-direction: column; }
+#json-editor {
+  flex: 1;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 12px;
+  font-family: "JetBrains Mono", Consolas, monospace;
+  font-size: 12px;
+  background: #0c1424;
+  color: #cbd5e1;
+  resize: none;
+}
+#epane-preview {
+  align-items: center; justify-content: center;
+  padding: 16px;
+}
+#epane-log pre {
+  flex: 1;
+  margin: 0;
+  padding: 12px;
+  font-family: "JetBrains Mono", Consolas, monospace;
+  font-size: 11px;
+  color: #cbd5e1;
+  background: #0c1424;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ===== 主题生成 ===== */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+#llm-result, #llm-status-display {
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--bg-2);
+  border-radius: 6px;
+  border: 1px solid var(--bg-3);
+}
+#llm-result pre, #llm-status-display pre {
+  margin: 0;
+  max-height: 400px;
+  overflow: auto;
+  font-size: 11px;
+}
