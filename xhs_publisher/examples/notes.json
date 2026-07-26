@@ -1,0 +1,14 @@
+[
+  {
+    "title": "第一篇笔记",
+    "content": "这是正文内容，写在这里。\n支持换行。",
+    "images": ["./images/p1.jpg", "./images/p2.jpg"],
+    "topics": ["日常", "分享"]
+  },
+  {
+    "title": "第二篇笔记",
+    "content": "另一篇的正文。",
+    "images": ["./images/p3.jpg"],
+    "topics": []
+  }
+]
